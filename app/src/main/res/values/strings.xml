@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Habla Conmigo</string>
+    <string name="eslogan">Aquí la comunicación no tiene límites…</string>
+    <string name="hola_mundo">Hola Mundo!</string>
+    <string name="mi_nombre">Fernando Zurita: </string>
+    <string name="login">Iniciar Sesión </string>
+    <string name="nombre_usuario">Ingresar usuario</string>
+    <string name="contrasena">Ingresar contraseña</string>
+    <string name="entrar">Entrar!</string>
+    <string name="regresar">Regresar</string>
+    <string name="abrir_nav">Abrir Ubicación</string>
+
+</resources>
