@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "225416897710",
+    "project_id": "hablaconmigo-74584",
+    "storage_bucket": "hablaconmigo-74584.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225416897710:android:cc28e2d380adf199fcf93f",
+        "android_client_info": {
+          "package_name": "com.example.hablaconmigo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225416897710-1ib9od1cbgupvs98po0gde0is8go9icn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hablaconmigo",
+            "certificate_hash": "fb4dcac4ce11ed2088a4de2fe26b178da9972b41"
+          }
+        },
+        {
+          "client_id": "225416897710-kd205mj1nlfofc5thdb2lltlhvht3glf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARmjUJJrS-R-cHI9M4pyA4_R2_Y7D8wlk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225416897710-kd205mj1nlfofc5thdb2lltlhvht3glf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

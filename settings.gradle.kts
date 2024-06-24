@@ -21,3 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "Habla Conmigo"
 include(":app")
+
+
+

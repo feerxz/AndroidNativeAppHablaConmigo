@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="erierblack">#252422</color>
+    <color name="ripplecolorblack">#b4b0ac</color>
+    <color name="variantblack">#0D0C08</color>
+    <color name="variantblue">#3330CD</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="placeholderwhite">#E6FFFFFF</color>
+    <color name="lightbluebackground">#5CE1E6</color>
+    <color name="generalbackground">#FF37D1D9</color>
+    <color name="transparent">#00000000</color>
+    <color name="facebookblue">#1877F2</color>
+    <color name="azulfondospinneritem">#3330CD</color>
+
 </resources>

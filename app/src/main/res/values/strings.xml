@@ -1,13 +1,65 @@
 <resources>
+    <string name="default_web_client_id">225416897710-kd205mj1nlfofc5thdb2lltlhvht3glf.apps.googleusercontent.com</string>
+
     <string name="app_name">Habla Conmigo</string>
-    <string name="eslogan">Aquí la comunicación no tiene límites…</string>
-    <string name="hola_mundo">Hola Mundo!</string>
-    <string name="mi_nombre">Fernando Zurita: </string>
-    <string name="login">Iniciar Sesión </string>
-    <string name="nombre_usuario">Ingresar usuario</string>
-    <string name="contrasena">Ingresar contraseña</string>
-    <string name="entrar">Entrar!</string>
-    <string name="regresar">Regresar</string>
-    <string name="abrir_nav">Abrir Ubicación</string>
+    <string name="eslogan">¡Aquí la comunicación no tiene límites!</string>
+    <string name="descripcionimagenpresentacion">Imagen de dos personas comunicándose</string>
+    <string name="login">Inicio de Sesión</string>
+    <string name="create_account">Crear Cuenta</string>
+    <string name="correo_electronico">Correo electrónico :</string>
+    <string name="ingresa_correo">Ingresa tu correo electrónico :</string>
+    <string name="contrasena">Contraseña :</string>
+    <string name="have_account">¿Ya tienes una cuenta?</string>
+    <string name="ingresa_contrasena">Crea una contraseña :</string>
+    <string name="confirmar_contrasena">Confirma tu contraseña :</string>
+    <string name="placeholder_confirmar_contrasena">Confirm Password*</string>
+    <string name="placeholder_correo">Email*</string>
+    <string name="placeholder_contrasena">Password*</string>
+    <string name="forgotpassword">Olvidé mi\ncontraseña</string>
+    <string name="signup">No tengo cuenta</string>
+    <string name="entrar">¡Entrar!</string>
+    <string name="inicia_sesion">Inicia Sesión</string>
+    <string name="crear_cuenta">Crear Cuenta</string>
+    <string name="continuar">Continuar</string>
+    <string name="visibilidad_de_contraseña">Visibilidad de contraseña</string>
+    <string name="google_auth_button">Continuar con Google</string>
+    <string name="google_register_button">Registrarme con Google</string>
+    <string name="facebook_auth_button">Continuar con Facebook</string>
+    <string name="facebook_register_button">Registrarme con Facebook</string>
+    <string name="about_you">Cuéntanos un poco más sobre ti…</string>
+    <string name="nombre">¿Cuál es tu nombre?</string>
+    <string name="apellido">¿Cuál es tu apellido?</string>
+    <string name="edad">¿Cuántos años tienes?</string>
+    <string name="genero">¿Cuál es tu género?</string>
+    <string name="direccion">¿Dónde vives?</string>
+
+    <string-array name="genero_array">
+        <item>Masculino</item>
+        <item>Femenino</item>
+        <item>Otro</item>
+    </string-array>
+
+
+    <string name="title_activity_login2">LoginActivity2</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="title_activity_main_menu_navigation">MainMenuNavigation</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
 
 </resources>

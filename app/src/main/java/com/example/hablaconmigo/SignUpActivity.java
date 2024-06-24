@@ -2,26 +2,25 @@ package com.example.hablaconmigo;
 
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
-
-
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import androidx.activity.EdgeToEdge;
-import androidx.activity.result.ActivityResultLauncher;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.example.hablaconmigo.database.AppDataBase;
 import com.example.hablaconmigo.entities.Usuario;
@@ -38,32 +37,39 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+public class SignUpActivity extends AppCompatActivity {
 
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-public class LoginActivity extends AppCompatActivity {
-
-    // Crear una instancia de ActivityResultLauncher
-    private ActivityResultLauncher<Intent> signUpActivityResultLauncher;
     private ExecutorService executorService;
     private SharedPreferences sharedpreferences;
     private static final int RC_SIGN_IN = 1;
     GoogleSignInClient mGoogleSignInClient;
     FirebaseAuth mAuth;
-
+    AppDataBase appDataBase = MyApplication.dataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_sign_up);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+         //Añadir subrayado a texto "Inicia Sesión"
+        TextView goToLogin = findViewById(R.id.goToLogin);
+        SpannableString content = new SpannableString(goToLogin.getText());
+        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+        goToLogin.setText(content);
+
+        //Funcionalidad para mostrar u ocultar contraseña cuando se presiona el icono del ojo
+        final EditText passwordEditText = findViewById(R.id.password1);
+        final EditText confirmPasswordEditText = findViewById(R.id.confirmpassword);
+        final ImageButton togglePasswordVisibilityButton1 = findViewById(R.id.imageBtnEye);
+        final ImageButton togglePasswordVisibilityButton2 = findViewById(R.id.imageBtnEye2);
+        Utils.setupPasswordVisibilityToggle(passwordEditText, togglePasswordVisibilityButton1);
+        Utils.setupPasswordVisibilityToggle(confirmPasswordEditText, togglePasswordVisibilityButton2);
 
         executorService = Executors.newSingleThreadExecutor();
         sharedpreferences = getSharedPreferences("UserSessionPreferences", MODE_PRIVATE);
@@ -76,21 +82,6 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        final EditText passwordEditText = findViewById(R.id.password);
-        final ImageButton togglePasswordVisibilityButton = findViewById(R.id.imageButtoneye);
-        Utils.setupPasswordVisibilityToggle(passwordEditText, togglePasswordVisibilityButton);
-
-        // Inicializar signUpActivityResultLauncher
-        signUpActivityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        // Si el registro se ha completado, , cierra la actividad de inicio de sesión
-                        finish();
-                    }
-                }
-        );
     }
 
     @Override
@@ -136,19 +127,17 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             //Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            SharedPreferences.Editor editor = sharedpreferences.edit();
-                            editor.putBoolean("justLoggedIn", true); // Añade esta línea
-                            editor.apply();
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             //Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            updateUI(null);
+
                             String errorMessage = "Error al iniciar sesión con Google: ";
                             if (task.getException() != null) {
                                 errorMessage += task.getException().toString();
                             }
-                            Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUpActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                            updateUI(null);
                         }
                     }
                 });
@@ -167,7 +156,7 @@ public class LoginActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(LoginActivity.this, "¡Cuenta creada correctamente!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUpActivity.this, "¡Cuenta creada correctamente!", Toast.LENGTH_SHORT).show();
                             }
                         });
                         SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -178,14 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                // Solo muestra el mensaje si el usuario acaba de iniciar sesión
-                                if (sharedpreferences.getBoolean("justLoggedIn", false)) {
-                                    Toast.makeText(LoginActivity.this, "¡Bienvenido de vuelta!", Toast.LENGTH_SHORT).show();
-                                    // Establece el valor en false para la próxima vez
-                                    SharedPreferences.Editor editor = sharedpreferences.edit();
-                                    editor.putBoolean("justLoggedIn", false);
-                                    editor.apply();
-                                }
+                                Toast.makeText(SignUpActivity.this, "¡Bienvenido de vuelta!", Toast.LENGTH_SHORT).show();
                             }
                         });
                         //Como el usuario existe, se verifica si el perfil está completo
@@ -203,78 +185,73 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
-    public void navigateToSignUp(View view) {
-        Intent intent = new Intent(this, SignUpActivity.class);
-        signUpActivityResultLauncher.launch(intent);
+    public void returnToLogin(View view) {
+        finish();
     }
 
-    public void login(View view) {
-        // Recuperar el correo y la contraseña ingresados por el usuario
-        String email, password;
-        EditText emailEditText = findViewById(R.id.etEmailLogin);
-        EditText passwordEditText = findViewById(R.id.password);
+    public void createAccount(View view) {
+        String email, password1, password2;
+        EditText emailEditText = findViewById(R.id.edtemail);
+        EditText passwordEditText1 = findViewById(R.id.password1);
+        EditText passwordEditText2 = findViewById(R.id.confirmpassword);
+
         email = emailEditText.getText().toString().trim().toLowerCase();
-        password = passwordEditText.getText().toString();
+        password1 = passwordEditText1.getText().toString();
+        password2 = passwordEditText2.getText().toString();
 
+        // Reset errors
         emailEditText.setError(null);
-        passwordEditText.setError(null);
+        passwordEditText1.setError(null);
+        passwordEditText2.setError(null);
 
-        // Verificar si los campos no están vacíos
         if (email.isEmpty()) {
             emailEditText.setError("Por favor, completa este campo");
-            return;
-        } else if (password.isEmpty()) {
-            passwordEditText.setError("Por favor, completa este campo");
-            return;
+        } else if (!Utils.validateEmail(email)) {
+            emailEditText.setError("Por favor, introduce un email válido");
+        } else if (password1.isEmpty()) {
+            passwordEditText1.setError("Por favor, completa este campo");
+        } else if (password2.isEmpty()) {
+            passwordEditText2.setError("Por favor, completa este campo");
+        } else if (!password1.equals(password2)) {
+            passwordEditText2.setError("Las contraseñas no coinciden");
+        } else if (password1.length() < 6) {
+            passwordEditText1.setError("La contraseña debe tener al menos 6 caracteres");
         } else {
-            // Hashear la contraseña para compararla con la almacenada en la base de datos
-            String hashedPassword = Utils.hashPassword(password);
-            // Buscar en la base de datos si existe un usuario con ese correo
-            AppDataBase appDataBase = MyApplication.dataBase;
+            //Se hashea la contraseña antes de guardarla
+            String hashedPassword = Utils.hashPassword(password1);
             executorService.execute(new Runnable() {
                 @Override
                 public void run() {
-                    Usuario usuario = appDataBase.daoUsuarios().findUserByEmail(email);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (usuario != null) {
-                                // Si existe un usuario con ese correo, verificar si tiene una contraseña almacenada
-                                if (usuario.getContrasena() == null) {
-                                    // Si no tiene contraseña almacenada, mostrar un mensaje de que esa cuenta se ha registrado con Google
-                                    Utils.showSnackBarAlert(view, "Este usuario se ha registrado con Google, por favor inicia sesión con Google");
-                                } else {
-                                    // Si tiene contraseña almacenada, verificar si coincide con la contraseña ingresada por el usuario
-                                    if (usuario.getContrasena().equals(hashedPassword)) {
-                                        // Si la contraseña coincide, almacenar el id del usuario en las preferencias compartidas
-                                        SharedPreferences.Editor editor = sharedpreferences.edit();
-                                        editor.putLong("userId", usuario.getId());
-                                        editor.apply();
-                                        // Verificar si el perfil del usuario está completo
-                                        if (usuario.getProfileCompleted()) {
-                                            // Si el perfil está completo, redirigir al menú principal
-                                            navigateToMainMenu();
-                                        } else {
-                                            // Si el perfil no está completo, redirigir a CompleteProfileActivity
-                                            navigateToCompleteProfile(usuario.getId());
-                                        }
-                                    } else {
-                                        // Si la contraseña no coincide, mostrar un mensaje de error
-                                        Utils.showSnackBarError(view, "Contraseña incorrecta");
-                                    }
-                                }
-                            } else {
-                                // Si no existe un usuario con ese correo en la base de datos, buscar si existe en firebase
-                                Utils.showSnackBarError(view, "No existe una cuenta asociada a ese correo electrónico");
+                    Usuario existingUser = appDataBase.daoUsuarios().findUserByEmail(email);
+                    if (existingUser != null) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Utils.showSnackBarAlert(view, "Ya existe una cuenta con este email");
                             }
-                        }
-                    });
+                        });
+                    } else {
+                        long userId = appDataBase.daoUsuarios().insert(new Usuario("", "", email, hashedPassword, null, 0, "", " ", false));
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(SignUpActivity.this, "¡Cuenta creada correctamente!", Toast.LENGTH_SHORT).show();
+                                SharedPreferences.Editor editor = sharedpreferences.edit();
+                                editor.putLong("userId", userId);
+                                editor.apply();
+                                // Navegar a CompleteProfileActivity
+                                Intent intent = new Intent(SignUpActivity.this, CompleteProfileActivity.class);
+                                intent.putExtra("userId", userId);
+                                setResult(RESULT_OK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+                    }
                 }
             });
         }
     }
-
 
     @Override
     protected void onDestroy() {
@@ -287,13 +264,14 @@ public class LoginActivity extends AppCompatActivity {
     private void navigateToMainMenu() {
         Intent intent = new Intent(this, MainMenuNavigationActivity.class);
         startActivity(intent);
-        finish();
+        finishAffinity();
     }
 
     private void navigateToCompleteProfile( long userId) {
         Intent intent = new Intent(this, CompleteProfileActivity.class);
         intent.putExtra("userId", userId);
         startActivity(intent);
-        finish();
+        finishAffinity();
     }
+
 }
