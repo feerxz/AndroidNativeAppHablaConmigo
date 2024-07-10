@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/generalbackground"
+    android:background="@color/whitevariantbackground"
     tools:context=".CompleteProfileActivity">
 
     <TextView
@@ -15,8 +15,9 @@
         android:fontFamily="@font/lilita_one"
         android:gravity="center"
         android:text="@string/about_you"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="35sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,14 +29,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/lilita_one"
+        android:fontFamily="sans-serif"
         android:text="@string/nombre"
-        android:textColor="@color/white"
-        android:textSize="28sp"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@id/nombre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtvcuentanos"
-        app:layout_constraintBottom_toTopOf="@id/nombre"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtvcuentanos" />
 
     <EditText
         android:id="@+id/nombre"
@@ -63,14 +64,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/lilita_one"
+        android:fontFamily="sans-serif"
         android:text="@string/apellido"
-        android:textColor="@color/white"
-        android:textSize="28sp"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@id/apellido"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nombre"
-        app:layout_constraintBottom_toTopOf="@id/apellido"/>
+        app:layout_constraintTop_toBottomOf="@+id/nombre" />
 
     <EditText
         android:id="@+id/apellido"
@@ -98,14 +99,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/lilita_one"
+        android:fontFamily="sans-serif"
         android:text="@string/edad"
-        android:textColor="@color/white"
-        android:textSize="28sp"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@id/edad"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/apellido"
-        app:layout_constraintBottom_toTopOf="@id/edad"/>
+        app:layout_constraintTop_toBottomOf="@+id/apellido" />
 
     <EditText
         android:id="@+id/edad"
@@ -133,17 +134,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/lilita_one"
+        android:fontFamily="sans-serif"
         android:text="@string/genero"
-        android:textColor="@color/white"
-        android:textSize="28sp"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edad"
-        app:layout_constraintBottom_toTopOf="@id/spinnerGenero"/>
+        app:layout_constraintTop_toBottomOf="@+id/edad" />
 
     <Spinner
-        android:id="@+id/spinnerGenero"
+        android:id="@+id/spinner"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
@@ -161,14 +162,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/lilita_one"
+        android:fontFamily="sans-serif"
         android:text="@string/direccion"
-        android:textColor="@color/white"
-        android:textSize="28sp"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@id/direccion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinnerGenero"
-        app:layout_constraintBottom_toTopOf="@id/direccion"/>
+        app:layout_constraintTop_toBottomOf="@id/spinner" />
 
     <EditText
         android:id="@+id/direccion"
@@ -196,7 +197,7 @@
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
-        android:backgroundTint="@color/azulfondospinneritem"
+        android:backgroundTint="@color/variantblue"
         android:fontFamily="@font/lilita_one"
         android:onClick="saveCompleteProfile"
         android:text="@string/continuar"

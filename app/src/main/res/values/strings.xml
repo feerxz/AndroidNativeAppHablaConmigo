@@ -1,7 +1,7 @@
 <resources>
     <string name="default_web_client_id">225416897710-kd205mj1nlfofc5thdb2lltlhvht3glf.apps.googleusercontent.com</string>
-
     <string name="app_name">Habla Conmigo</string>
+
     <string name="eslogan">¡Aquí la comunicación no tiene límites!</string>
     <string name="descripcionimagenpresentacion">Imagen de dos personas comunicándose</string>
     <string name="login">Inicio de Sesión</string>
@@ -24,7 +24,7 @@
     <string name="visibilidad_de_contraseña">Visibilidad de contraseña</string>
     <string name="google_auth_button">Continuar con Google</string>
     <string name="google_register_button">Registrarme con Google</string>
-    <string name="facebook_auth_button">Continuar con Facebook</string>
+    <string name="facebook_auth_button">Continuar como invitado</string>
     <string name="facebook_register_button">Registrarme con Facebook</string>
     <string name="about_you">Cuéntanos un poco más sobre ti…</string>
     <string name="nombre">¿Cuál es tu nombre?</string>
@@ -32,6 +32,13 @@
     <string name="edad">¿Cuántos años tienes?</string>
     <string name="genero">¿Cuál es tu género?</string>
     <string name="direccion">¿Dónde vives?</string>
+    <string name="boton_crear_cuenta">Botón para crear cuenta</string>
+    <string name="convertir_cuenta_anonima">Convertir cuenta anónima</string>
+    <string name="back">Atrás</string>
+    <string name="recoverpassword">¡Recuperemos tu contraseña!</string>
+    <string name="instruction">Por favor escribe el correo electrónico asociado a la cuenta, enviaremos un link para que reestablezcas la contraseña.</string>
+    <string name="recoveraccountbtn">Recuperar cuenta</string>
+    <string name="forwardlink">¿Aún no has recibido el link? Reenviar</string>
 
     <string-array name="genero_array">
         <item>Masculino</item>
@@ -39,16 +46,6 @@
         <item>Otro</item>
     </string-array>
 
-
-    <string name="title_activity_login2">LoginActivity2</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
     <string name="title_activity_main_menu_navigation">MainMenuNavigation</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -60,6 +57,9 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="logout_button">Cerrar sesión</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

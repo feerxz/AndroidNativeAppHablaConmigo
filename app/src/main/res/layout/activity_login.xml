@@ -5,241 +5,267 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/generalbackground"
+    android:background="@color/whitevariantbackground"
     tools:context=".LoginActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.8" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.2" />
-
-
-    <ImageView
-        android:id="@+id/main_imageL"
-        android:layout_width="292dp"
-        android:layout_height="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.031"
-        app:srcCompat="@drawable/main_image" />
-
-    <TextView
-        android:id="@+id/title_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/lilita_one"
-        android:text="@string/login"
-        android:textColor="@color/white"
-        android:textSize="37sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_imageL" />
-
-    <TextView
-        android:id="@+id/title_email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/lilita_one"
-        android:text="@string/correo_electronico"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="@id/etEmailLogin"
-        app:layout_constraintTop_toBottomOf="@+id/title_login" />
-
-    <EditText
-        android:id="@+id/etEmailLogin"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:autofillHints="emailAddress"
-        android:background="@drawable/custom_edit_text"
-        android:ems="10"
-        android:fontFamily="@font/lilita_one"
-        android:gravity="center"
-        android:hint="@string/placeholder_correo"
-        android:inputType="textEmailAddress"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textColorHighlight="#000000"
-        android:textColorHint="@color/cardview_dark_background"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/title_password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_email" />
-
-    <TextView
-        android:id="@+id/title_password"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/lilita_one"
-        android:text="@string/contrasena"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="@+id/password"
-        app:layout_constraintTop_toBottomOf="@id/etEmailLogin" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:autofillHints="password"
-        android:background="@drawable/custom_edit_text"
-        android:ems="10"
-        android:fontFamily="@font/lilita_one"
-        android:gravity="center"
-        android:hint="@string/placeholder_contrasena"
-        android:inputType="textPassword"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textColorHighlight="@color/white"
-        android:textColorHint="@color/cardview_dark_background"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_password" />
-
-    <ImageButton
-        android:id="@+id/imageButtoneye"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainViewsContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginEnd="2dp"
-        android:background="@color/transparent"
-        android:contentDescription="@string/visibilidad_de_contraseña"
-        android:src="@drawable/eye"
-        app:layout_constraintBottom_toBottomOf="@+id/password"
-        app:layout_constraintEnd_toEndOf="@+id/password"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/password" />
-
-    <Button
-        android:id="@+id/btnEntrar"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="@color/black"
-        android:fontFamily="@font/lilita_one"
-        android:onClick="login"
-        android:text="@string/entrar"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:cornerRadius="10dp"
-        app:layout_constraintBottom_toTopOf="@id/forgotpassword"
-        app:layout_constraintEnd_toEndOf="@+id/password"
-        app:layout_constraintStart_toStartOf="@+id/password"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:rippleColor="@color/ripplecolorblack" />
-
-    <TextView
-        android:id="@+id/forgotpassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="@font/lilita_one"
-        android:gravity="center"
-        android:text="@string/forgotpassword"
-        android:textAlignment="center"
-        android:textColor="@drawable/selector_textview"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@id/auth_google"
-        app:layout_constraintStart_toStartOf="@+id/password"
-        app:layout_constraintTop_toBottomOf="@+id/btnEntrar" />
-
-    <TextView
-        android:id="@+id/signup"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="@font/lilita_one"
-        android:gravity="center"
-        android:onClick="navigateToSignUp"
-        android:text="@string/signup"
-        android:textColor="@drawable/selector_textview"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/forgotpassword"
-        app:layout_constraintEnd_toEndOf="@+id/password"
-        app:layout_constraintTop_toTopOf="@+id/forgotpassword" />
-
-    <Button
-        android:id="@+id/auth_google"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:backgroundTint="@color/white"
-        android:fontFamily="@font/lilita_one"
-        android:gravity="center"
-        android:onClick="signIn"
-        android:text="@string/google_auth_button"
-        android:textAlignment="center"
-        android:textColor="#B2000000"
-        android:textSize="22sp"
-        app:cornerRadius="10dp"
-        app:layout_constraintBottom_toTopOf="@id/auth_fb"
-        app:layout_constraintEnd_toEndOf="@+id/signup"
-        app:layout_constraintStart_toStartOf="@+id/forgotpassword"
-        app:layout_constraintTop_toBottomOf="@+id/forgotpassword" />
-
-
-    <ImageView
-        android:id="@+id/google_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/auth_google"
-        app:layout_constraintEnd_toStartOf="@+id/guideline1"
-        app:layout_constraintStart_toStartOf="@+id/auth_google"
-        app:layout_constraintTop_toTopOf="@+id/auth_google"
-        app:srcCompat="@drawable/google" />
-
-    <Button
-        android:id="@+id/auth_fb"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:backgroundTint="@color/facebookblue"
-        android:fontFamily="@font/lilita_one"
-        android:gravity="center"
-        android:text="@string/facebook_auth_button"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/auth_google"
-        app:layout_constraintStart_toStartOf="@+id/auth_google"
-        app:layout_constraintTop_toBottomOf="@+id/auth_google" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/facebook_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/auth_fb"
-        app:layout_constraintEnd_toStartOf="@+id/guideline1"
-        app:layout_constraintStart_toStartOf="@+id/auth_fb"
-        app:layout_constraintTop_toTopOf="@+id/auth_fb"
-        app:srcCompat="@drawable/facebook" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.2" />
+
+
+        <ImageView
+            android:id="@+id/main_imageL"
+            android:layout_width="292dp"
+            android:layout_height="200dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.031"
+            app:srcCompat="@drawable/main_image" />
+
+        <TextView
+            android:id="@+id/title_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/lilita_one"
+            android:text="@string/login"
+            android:textColor="@color/erierblack"
+            android:textSize="37sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_imageL" />
+
+        <TextView
+            android:id="@+id/title_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/lilita_one"
+            android:text="@string/correo_electronico"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="@id/etEmailLogin"
+            app:layout_constraintTop_toBottomOf="@+id/title_login" />
+
+        <EditText
+            android:id="@+id/etEmailLogin"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:autofillHints="emailAddress"
+            android:background="@drawable/custom_edit_text"
+            android:ems="10"
+            android:fontFamily="@font/lilita_one"
+            android:gravity="center"
+            android:hint="@string/placeholder_correo"
+            android:inputType="textEmailAddress"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textColorHint="@color/cardview_dark_background"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/title_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_email" />
+
+        <TextView
+            android:id="@+id/title_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/lilita_one"
+            android:text="@string/contrasena"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="@+id/password"
+            app:layout_constraintTop_toBottomOf="@id/etEmailLogin" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:autofillHints="password"
+            android:background="@drawable/custom_edit_text"
+            android:ems="10"
+            android:fontFamily="@font/lilita_one"
+            android:gravity="center"
+            android:hint="@string/placeholder_contrasena"
+            android:inputType="textPassword"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textColorHint="@color/cardview_dark_background"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_password" />
+
+        <ImageButton
+            android:id="@+id/imageButtoneye"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:background="@color/transparent"
+            android:contentDescription="@string/visibilidad_de_contraseña"
+            android:src="@drawable/eye"
+            app:layout_constraintBottom_toBottomOf="@+id/password"
+            app:layout_constraintEnd_toEndOf="@+id/password"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/password" />
+
+        <Button
+            android:id="@+id/btnEntrar"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/black"
+            android:fontFamily="@font/lilita_one"
+            android:onClick="login"
+            android:text="@string/entrar"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toTopOf="@id/forgotpassword"
+            app:layout_constraintEnd_toEndOf="@+id/password"
+            app:layout_constraintStart_toStartOf="@+id/password"
+            app:layout_constraintTop_toBottomOf="@+id/password"
+            app:rippleColor="@color/ripplecolorblack" />
+
+        <TextView
+            android:id="@+id/forgotpassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/lilita_one"
+            android:gravity="center"
+            android:onClick="navigateToRecoverPassword"
+            android:text="@string/forgotpassword"
+            android:textAlignment="center"
+            android:textColor="@drawable/selector_textview"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toTopOf="@id/auth_google"
+            app:layout_constraintStart_toStartOf="@+id/password"
+            app:layout_constraintTop_toBottomOf="@+id/btnEntrar" />
+
+        <TextView
+            android:id="@+id/signup"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/lilita_one"
+            android:gravity="center"
+            android:onClick="navigateToSignUp"
+            android:text="@string/signup"
+            android:textColor="@drawable/selector_textview"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="@+id/forgotpassword"
+            app:layout_constraintEnd_toEndOf="@+id/password"
+            app:layout_constraintTop_toTopOf="@+id/forgotpassword" />
+
+        <Button
+            android:id="@+id/auth_google"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:backgroundTint="#4E4C4B"
+            android:fontFamily="@font/lilita_one"
+            android:gravity="center"
+            android:onClick="GoogleSignInButton"
+            android:text="@string/google_auth_button"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toTopOf="@id/guest"
+            app:layout_constraintEnd_toEndOf="@+id/signup"
+            app:layout_constraintStart_toStartOf="@+id/forgotpassword"
+            app:layout_constraintTop_toBottomOf="@+id/forgotpassword"
+            app:rippleColor="@color/ripplecolorblack" />
+
+
+        <ImageView
+            android:id="@+id/google_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/auth_google"
+            app:layout_constraintEnd_toStartOf="@+id/guideline1"
+            app:layout_constraintStart_toStartOf="@+id/auth_google"
+            app:layout_constraintTop_toTopOf="@+id/auth_google"
+            app:srcCompat="@drawable/google_logo" />
+
+        <Button
+            android:id="@+id/guest"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/guestcolor"
+            android:fontFamily="@font/lilita_one"
+            android:gravity="center"
+            android:onClick="AnonymouslySignInButton"
+            android:text="@string/facebook_auth_button"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/auth_google"
+            app:layout_constraintStart_toStartOf="@+id/auth_google"
+            app:layout_constraintTop_toBottomOf="@+id/auth_google" />
+
+        <ImageView
+            android:id="@+id/guest_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/guest"
+            app:layout_constraintEnd_toStartOf="@+id/guideline1"
+            app:layout_constraintStart_toStartOf="@+id/guest"
+            app:layout_constraintTop_toTopOf="@+id/guest"
+            app:srcCompat="@drawable/guesticon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fragmentPasswordReset_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -48,10 +48,10 @@ public class CompleteProfileActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        Spinner spinnerGenero = findViewById(R.id.spinnerGenero);
+        Spinner spinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.genero_array, R.layout.spinner_selected_item);
         adapter.setDropDownViewResource(R.layout.spinner_item);
-        spinnerGenero.setAdapter(adapter);
+        spinner.setAdapter(adapter);
 
         Intent intent = getIntent();
         userId = intent.getLongExtra("userId", -1);
@@ -71,7 +71,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
         name = ((EditText) findViewById(R.id.nombre)).getText().toString();
         lastname = ((EditText) findViewById(R.id.apellido)).getText().toString();
         ageString = ((EditText) findViewById(R.id.edad)).getText().toString();
-        gender = ((Spinner) findViewById(R.id.spinnerGenero)).getSelectedItem().toString();
+        gender = ((Spinner) findViewById(R.id.spinner)).getSelectedItem().toString();
         address = ((EditText) findViewById(R.id.direccion)).getText().toString();
 
         if (name.isEmpty() || lastname.isEmpty() || ageString.isEmpty() || gender.isEmpty() || address.isEmpty()) {

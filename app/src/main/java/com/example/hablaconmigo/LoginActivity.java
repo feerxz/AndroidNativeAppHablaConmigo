@@ -3,8 +3,10 @@ package com.example.hablaconmigo;
 
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.view.View;
@@ -14,17 +16,22 @@ import android.widget.Toast;
 
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.hablaconmigo.database.AppDataBase;
 import com.example.hablaconmigo.entities.Usuario;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -34,6 +41,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -49,10 +57,9 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> signUpActivityResultLauncher;
     private ExecutorService executorService;
     private SharedPreferences sharedpreferences;
-    private static final int RC_SIGN_IN = 1;
+    private static final int GOOGLE_SIGN_IN = 1;
     GoogleSignInClient mGoogleSignInClient;
     FirebaseAuth mAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
 
         executorService = Executors.newSingleThreadExecutor();
         sharedpreferences = getSharedPreferences("UserSessionPreferences", MODE_PRIVATE);
@@ -91,6 +99,27 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        // Registrar un callback para el onBackPressedDispatcher
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Obtener una referencia al fragmento de recuperación de contraseña
+                RecoverPasswordFragment recoverPasswordFragment = (RecoverPasswordFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentPasswordReset_container);
+
+                // Verificar si el fragmento está visible
+                if (recoverPasswordFragment != null && recoverPasswordFragment.isVisible()) {
+                    // Si el fragmento está visible, ocultarlo y hacer visible el contenedor de vistas principales
+                    getSupportFragmentManager().beginTransaction().remove(recoverPasswordFragment).commit();
+                    ConstraintLayout mainViewsContainer = findViewById(R.id.mainViewsContainer);
+                    mainViewsContainer.setVisibility(View.VISIBLE);
+                } else {
+                    // Si el fragmento no está visible, llamar al comportamiento de retroceso predeterminado
+                    setEnabled(false);
+                    onBackPressed();
+                }
+            }
+        });
     }
 
     @Override
@@ -101,17 +130,16 @@ public class LoginActivity extends AppCompatActivity {
         updateUI(currentUser);
     }
 
-    public void signIn( View view) {
+    public void GoogleSignInButton( View view) {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == GOOGLE_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
@@ -134,17 +162,15 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            //Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             SharedPreferences.Editor editor = sharedpreferences.edit();
-                            editor.putBoolean("justLoggedIn", true); // Añade esta línea
+                            editor.putBoolean("justLoggedIn", true);
                             editor.apply();
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
-                            //Log.w(TAG, "signInWithCredential:failure", task.getException());
                             updateUI(null);
-                            String errorMessage = "Error al iniciar sesión con Google: ";
+                            String errorMessage = "Inicio de Sesión Fallido: ";
                             if (task.getException() != null) {
                                 errorMessage += task.getException().toString();
                             }
@@ -154,8 +180,43 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    public void AnonymouslySignInButton(View view) {
+        new AlertDialog.Builder(this)
+                .setTitle("Iniciar sesión como anónimo")
+                .setMessage("Si inicias sesión como invitado, tus datos no se guardarán al momento de cerrar la sesión y ciertas funciones no estarán disponibles.")
+                .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Procede con el inicio de sesión anónimo cuando se toca "Continuar"
+                        mAuth.signInAnonymously()
+                                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            // Sign in success, update UI with the signed-in user's information
+                                            FirebaseUser user = mAuth.getCurrentUser();
+                                            updateUI(user);
+                                        } else {
+                                            // If sign in fails, display a message to the user.
+                                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                                    Toast.LENGTH_SHORT).show();
+                                            updateUI(null);
+                                        }
+                                    }
+                                });
+                    }
+                })
+                .setNegativeButton("Cancelar", null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+
     private void updateUI(FirebaseUser user) {
         if (user != null){
+            if (user.isAnonymous()) {
+                navigateToMainMenu();
+                return;
+            }
             AppDataBase appDataBase = MyApplication.dataBase;
             executorService.execute(new Runnable() {
                 @Override
@@ -202,8 +263,17 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public void navigateToRecoverPassword(View view) {
+        // Crear una nueva instancia del fragmento
+        RecoverPasswordFragment recoverPasswordFragment = new RecoverPasswordFragment();
+        ConstraintLayout mainViewsContainer = findViewById(R.id.mainViewsContainer);
+        mainViewsContainer.setVisibility(View.GONE);
+        // Reemplazar el fragmento en el contenedor
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragmentPasswordReset_container, recoverPasswordFragment)
+                .commit();
 
-
+    }
     public void navigateToSignUp(View view) {
         Intent intent = new Intent(this, SignUpActivity.class);
         signUpActivityResultLauncher.launch(intent);
@@ -265,8 +335,35 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 }
                             } else {
-                                // Si no existe un usuario con ese correo en la base de datos, buscar si existe en firebase
-                                Utils.showSnackBarError(view, "No existe una cuenta asociada a ese correo electrónico");
+                                // Si no existe un usuario con ese correo en la base de datos (puede que el usuario haya borrado los datos de la aplicacion) buscar si existe en firebase
+                                mAuth.signInWithEmailAndPassword(email, password)
+                                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (task.isSuccessful()) {
+                                                    // El usuario existe en Firebase, crear (por debajo) un nuevo registro en la base de datos local
+                                                    executorService.execute(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            long userId = appDataBase.daoUsuarios().insert(new Usuario("", "", email, hashedPassword, null, 0, "", " ", false));
+                                                            runOnUiThread(new Runnable() {
+                                                                @Override
+                                                                public void run() {
+                                                                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                                                                    editor.putLong("userId", userId);
+                                                                    editor.apply();
+                                                                    // Redirigir a CompleteProfileActivity (porque los datos el usuario ya no existen debido a que se borraron)
+                                                                    navigateToCompleteProfile(userId);
+                                                                }
+                                                            });
+                                                        }
+                                                    });
+                                                } else {
+                                                    // El usuario no existe en Firebase, mostrar un mensaje de error
+                                                    Utils.showSnackBarError(view, "No existe una cuenta asociada a ese correo electrónico");
+                                                }
+                                            }
+                                        });
                             }
                         }
                     });

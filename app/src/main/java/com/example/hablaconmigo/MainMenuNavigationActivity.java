@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -84,11 +85,9 @@ public class MainMenuNavigationActivity extends AppCompatActivity implements Nav
         if (id == R.id.nav_logout) {
             // Cerrar sesión en Firebase
             mAuth.signOut();
-
             // Cerrar sesión en Google SignIn
             GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN);
             mGoogleSignInClient.signOut();
-
             // Obtener las preferencias compartidas
             SharedPreferences sharedpreferences = getSharedPreferences("UserSessionPreferences", MODE_PRIVATE);
             // Eliminar userId de las preferencias compartidas

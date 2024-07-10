@@ -21,27 +21,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HablaConmigo"
         tools:targetApi="31">
+
         <activity
             android:name=".MainMenuNavigationActivity"
             android:exported="false"
             android:label="@string/title_activity_main_menu_navigation"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.HablaConmigo.NoActionBar" />
-
         <activity
             android:name=".MainMenuActivity"
             android:exported="false" />
-
         <activity
             android:name=".CompleteProfileActivity"
-            android:exported="false" />
-
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SignUpActivity"
-            android:exported="false" />
-
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.HablaConmigo.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,7 +53,8 @@
 
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="preloaded_fonts"

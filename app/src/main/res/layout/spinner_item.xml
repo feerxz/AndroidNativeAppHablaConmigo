@@ -4,7 +4,7 @@
         android:id="@android:id/text1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/facebookblue"
+        android:background="@color/variantblue"
         android:padding="10dp"
         android:textColor="@color/white"
         android:textSize="20sp" />

@@ -139,6 +139,7 @@ public class SignUpActivity extends AppCompatActivity {
                             Toast.makeText(SignUpActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
+
                     }
                 });
     }
@@ -227,26 +228,43 @@ public class SignUpActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Utils.showSnackBarAlert(view, "Ya existe una cuenta con este email");
+                                Utils.showSnackBarAlert(view, "Ya existe una cuenta asociada con este email");
                             }
                         });
                     } else {
-                        long userId = appDataBase.daoUsuarios().insert(new Usuario("", "", email, hashedPassword, null, 0, "", " ", false));
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(SignUpActivity.this, "¡Cuenta creada correctamente!", Toast.LENGTH_SHORT).show();
-                                SharedPreferences.Editor editor = sharedpreferences.edit();
-                                editor.putLong("userId", userId);
-                                editor.apply();
-                                // Navegar a CompleteProfileActivity
-                                Intent intent = new Intent(SignUpActivity.this, CompleteProfileActivity.class);
-                                intent.putExtra("userId", userId);
-                                setResult(RESULT_OK);
-                                startActivity(intent);
-                                finish();
-                            }
-                        });
+                        mAuth.createUserWithEmailAndPassword(email, password1)
+                                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            // El usuario se creó con éxito en Firebase, ahora se lo guarda en la db local
+                                            executorService.execute(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    long userId = appDataBase.daoUsuarios().insert(new Usuario("", "", email, hashedPassword, null, 0, "", " ", false));
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            Toast.makeText(SignUpActivity.this, "¡Cuenta creada correctamente!", Toast.LENGTH_SHORT).show();
+                                                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                                                            editor.putLong("userId", userId);
+                                                            editor.apply();
+                                                            // Navegar a CompleteProfileActivity
+                                                            Intent intent = new Intent(SignUpActivity.this, CompleteProfileActivity.class);
+                                                            intent.putExtra("userId", userId);
+                                                            setResult(RESULT_OK);
+                                                            startActivity(intent);
+                                                            finish();
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        } else {
+                                            Utils.showSnackBarAlert(view, "Ya existe una cuenta asociada con este email");
+                                            updateUI(null);
+                                        }
+                                    }
+                                });
                     }
                 }
             });

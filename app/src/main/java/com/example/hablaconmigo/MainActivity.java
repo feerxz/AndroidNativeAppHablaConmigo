@@ -57,38 +57,37 @@ public class MainActivity extends AppCompatActivity {
 
         userSessionPreferences = getSharedPreferences("UserSessionPreferences", MODE_PRIVATE);
 
+    }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Espera de 2 segundos antes de verificar la sesión del usuario
+        new Handler().postDelayed(() -> {
+            long userId = userSessionPreferences.getLong("userId", -1);
+            if (userId != -1) { // El usuario ha iniciado sesión
                 AppDataBase appDataBase = MyApplication.dataBase;
-                long userId = userSessionPreferences.getLong("userId", -1);
-                Intent intent;
-                if (userId != -1) { // El usuario ha iniciado sesión
-                    ExecutorService executorService = Executors.newSingleThreadExecutor();
-                    executorService.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            Usuario usuario = appDataBase.daoUsuarios().findUserById(userId);
-                            boolean isProfileCompleted = false;
-                            if (usuario != null) {
-                                isProfileCompleted = usuario.getProfileCompleted();
-                            }
-                            Intent intent = getRedirectIntent(isProfileCompleted);
-                            startActivity(intent);
-                            finish();
-                        }
-                    });
-                } else {
-                    // El usuario no ha iniciado sesión, redirige a LoginActivity
-                    intent = new Intent(MainActivity.this, LoginActivity.class);
+                ExecutorService executorService = Executors.newSingleThreadExecutor();
+                executorService.execute(() -> {
+                    Usuario usuario = appDataBase.daoUsuarios().findUserById(userId);
+                    boolean isProfileCompleted = false;
+                    if (usuario != null) {
+                        isProfileCompleted = usuario.getProfileCompleted();
+                    }
+                    Intent intent = getRedirectIntent(isProfileCompleted);
                     startActivity(intent);
                     finish();
-                }
+                });
+            } else {
+                // El usuario no ha iniciado sesión, redirige a LoginActivity
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
-        }, 1500); // 1500 milisegundos de retraso
-
+        }, 2000); // Espera de 2000 milisegundos (2 segundos)
     }
+
     private Intent getRedirectIntent(boolean isProfileCompleted) {
         if (!isProfileCompleted) {
             // El perfil del usuario no está completo, redirige a CompleteProfileActivity
