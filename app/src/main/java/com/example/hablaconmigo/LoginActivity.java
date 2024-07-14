@@ -182,7 +182,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void AnonymouslySignInButton(View view) {
         new AlertDialog.Builder(this)
-                .setTitle("Iniciar sesión como anónimo")
+                .setTitle("Iniciar sesión como invitado")
                 .setMessage("Si inicias sesión como invitado, tus datos no se guardarán al momento de cerrar la sesión y ciertas funciones no estarán disponibles.")
                 .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -241,10 +241,11 @@ public class LoginActivity extends AppCompatActivity {
                             public void run() {
                                 // Solo muestra el mensaje si el usuario acaba de iniciar sesión
                                 if (sharedpreferences.getBoolean("justLoggedIn", false)) {
-                                    Toast.makeText(LoginActivity.this, "¡Bienvenido de vuelta!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "¡Bienvenido de vuelta " +usuario.getNombre() + "!" , Toast.LENGTH_SHORT).show();
                                     // Establece el valor en false para la próxima vez
                                     SharedPreferences.Editor editor = sharedpreferences.edit();
                                     editor.putBoolean("justLoggedIn", false);
+                                    editor.putLong("userId", usuario.getId());
                                     editor.apply();
                                 }
                             }

@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             // El perfil del usuario no está completo, redirige a CompleteProfileActivity
             return new Intent(MainActivity.this, CompleteProfileActivity.class);
         } else {
-            // El perfil del usuario está completo, redirige a MainMenuActivity
+            // El perfil del usuario está completo, redirige a MainMenuNavigationActivity
             return new Intent(MainActivity.this, MainMenuNavigationActivity.class);
         }
     }

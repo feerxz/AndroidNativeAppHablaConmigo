@@ -3,11 +3,16 @@ package com.example.hablaconmigo;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
 
 
+import com.example.hablaconmigo.database.AppDataBase;
+import com.example.hablaconmigo.databinding.NavHeaderMainMenuNavigationBinding;
+import com.example.hablaconmigo.entities.Usuario;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -25,10 +30,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.hablaconmigo.databinding.ActivityMainMenuNavigationBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainMenuNavigationActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class MainMenuNavigationActivity extends AppCompatActivity  {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainMenuNavigationBinding binding;
+    private NavHeaderMainMenuNavigationBinding navHeaderBinding;
+    AppDataBase appDataBase = MyApplication.dataBase;
+    private ExecutorService executorService;
+
+    private SharedPreferences sharedpreferences;
     FirebaseAuth mAuth;
 
     @Override
@@ -49,18 +62,48 @@ public class MainMenuNavigationActivity extends AppCompatActivity implements Nav
         });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
-        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0); // Obtener la vista del encabezado del menú
+        navHeaderBinding = NavHeaderMainMenuNavigationBinding.bind(headerView); // Vincular la vista del encabezado del menú
+        executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                sharedpreferences = getSharedPreferences("UserSessionPreferences", MODE_PRIVATE);
+                long userId = sharedpreferences.getLong("userId", -1);
+                Usuario usuario = appDataBase.daoUsuarios().findUserById(userId);
+                // Acceder a los TextViews para setear su contenido
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        TextView navName = navHeaderBinding.navheadertxtvNombre;
+                        TextView navEmail = navHeaderBinding.navheadertxtvCorreo;
+                        if (usuario != null) {
+                            String fullName = usuario.getNombre() + " " + usuario.getApellido();
+                            navName.setText(fullName);
+                            navEmail.setText(usuario.getCorreoElectronico());
+                        } else {
+                            navName.setText("Usuario Anónimo");
+                            navEmail.setText("xxxxxxxxxx");
+                        }
+                    }
+                });
+            }
+        });
+
+
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_chat, R.id.nav_tarjetas, R.id.nav_atajos)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main_menu_navigation);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-
-
+        NavigationUI.setupWithNavController(navigationView, navController);
         mAuth = FirebaseAuth.getInstance();
+
+
     }
 
     @Override
@@ -71,37 +114,29 @@ public class MainMenuNavigationActivity extends AppCompatActivity implements Nav
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main_menu_navigation);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_logout) {
+            logout();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_logout) {
-            // Cerrar sesión en Firebase
-            mAuth.signOut();
-            // Cerrar sesión en Google SignIn
-            GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN);
-            mGoogleSignInClient.signOut();
-            // Obtener las preferencias compartidas
-            SharedPreferences sharedpreferences = getSharedPreferences("UserSessionPreferences", MODE_PRIVATE);
-            // Eliminar userId de las preferencias compartidas
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.remove("userId");
-            editor.apply();
-            // Redirigir a la pantalla de inicio de sesión
-            goToLogin();
-            finish();
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+    private void logout() {
+        // Cerrar sesión en Firebase
+        mAuth.signOut();
+        // Cerrar sesión en Google SignIn
+        GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN);
+        mGoogleSignInClient.signOut();
+        // Obtener las preferencias compartidas
+        SharedPreferences sharedpreferences = getSharedPreferences("UserSessionPreferences", MODE_PRIVATE);
+        // Eliminar userId de las preferencias compartidas
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.remove("userId");
+        editor.apply();
+        // Redirigir a la pantalla de inicio de sesión
+        goToLogin();
     }
 
     private void goToLogin() {
@@ -110,4 +145,10 @@ public class MainMenuNavigationActivity extends AppCompatActivity implements Nav
         finish();
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main_menu_navigation);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
 }

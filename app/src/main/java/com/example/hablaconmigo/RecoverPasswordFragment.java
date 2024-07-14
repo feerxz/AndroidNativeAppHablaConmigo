@@ -99,7 +99,7 @@ public class RecoverPasswordFragment extends Fragment {
     }
     private void sendRecoverPasswordEmail(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setView(R.layout.layout_loading_dialog); // layout_loading_dialog es tu layout personalizado para el diálogo de carga
+        builder.setView(R.layout.layout_loading_dialog); // layout_loading_dialog es el layout personalizado para el diálogo de carga
         AlertDialog dialog = builder.create();
         dialog.show();
 

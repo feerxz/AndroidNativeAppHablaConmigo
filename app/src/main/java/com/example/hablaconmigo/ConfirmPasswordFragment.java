@@ -31,6 +31,7 @@ import java.util.concurrent.Executors;
 public class ConfirmPasswordFragment extends Fragment {
     String email;
     private ExecutorService executorService;
+    private int attemptcount = 0;
 
     public ConfirmPasswordFragment() {
         // Required empty public constructor
@@ -104,7 +105,16 @@ public class ConfirmPasswordFragment extends Fragment {
 
                             } else {
                                 // La autenticación falló, no existe una cuenta con estas credenciales
-                                Toast.makeText(getActivity(), "La contraseña proporcionada no coincide.", Toast.LENGTH_LONG).show();
+                                attemptcount++;
+                                if (attemptcount == 3) {
+                                    // Si el usuario ha intentado 3 veces, mostramos un mensaje y lo redirigimos al inicio de sesión
+                                    Toast.makeText(getActivity(), "Has excedido el número de intentos permitidos.", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                    startActivity(intent);
+                                    getActivity().finish();
+                                } else {
+                                    Utils.showSnackBarError(view, "La contraseña proporcionada no coincide.");
+                                }
                             }
                         }
                     });

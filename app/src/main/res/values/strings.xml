@@ -39,6 +39,10 @@
     <string name="instruction">Por favor escribe el correo electrónico asociado a la cuenta, enviaremos un link para que reestablezcas la contraseña.</string>
     <string name="recoveraccountbtn">Recuperar cuenta</string>
     <string name="forwardlink">¿Aún no has recibido el link? Reenviar</string>
+    <string name="descripcionimagenrecoverpassword">Imagen de una persona recuperando su contraseña</string>
+    <string name="confirmarcambiocontrasenatext">Confirma el cambio de contraseña</string>
+    <string name="indicacionesconfirmarcontrasena">Por favor escribe la misma contraseña que introdujiste en el link del email enviado.</string>
+    <string name="confirmar">Confirmar</string>
 
     <string-array name="genero_array">
         <item>Masculino</item>
@@ -52,14 +56,14 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="logout">Cerrar Sesión</string>
+    <string name="settings">Configuraciones</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="logout_button">Cerrar sesión</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_chat">Chat</string>
+    <string name="menu_tarjetas">Tarjetas de Mensajes</string>
+    <string name="menu_atajos">Atajos</string>
+
 
 
 </resources>
