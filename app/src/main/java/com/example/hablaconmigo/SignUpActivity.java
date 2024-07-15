@@ -153,7 +153,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Usuario usuario = appDataBase.daoUsuarios().findUserByEmail(user.getEmail());
                     if (usuario == null){
                         //Si el usuario no existe en la base de datos, se crea
-                        long userId = appDataBase.daoUsuarios().insert(new Usuario("", "", user.getEmail(), null, user.getUid(),0, "", " ", false));
+                        long userId = appDataBase.daoUsuarios().insert(new Usuario("", "", user.getEmail(), null, user.getUid(),0, "", " ", false, null));
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -241,7 +241,7 @@ public class SignUpActivity extends AppCompatActivity {
                                             executorService.execute(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    long userId = appDataBase.daoUsuarios().insert(new Usuario("", "", email, hashedPassword, null, 0, "", " ", false));
+                                                    long userId = appDataBase.daoUsuarios().insert(new Usuario("", "", email, hashedPassword, null, 0, "", " ", false, null));
                                                     runOnUiThread(new Runnable() {
                                                         @Override
                                                         public void run() {

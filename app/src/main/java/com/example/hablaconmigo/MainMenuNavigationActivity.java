@@ -7,9 +7,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
 import com.example.hablaconmigo.database.AppDataBase;
 import com.example.hablaconmigo.databinding.NavHeaderMainMenuNavigationBinding;
 import com.example.hablaconmigo.entities.Usuario;
@@ -30,6 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.hablaconmigo.databinding.ActivityMainMenuNavigationBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -77,8 +80,13 @@ public class MainMenuNavigationActivity extends AppCompatActivity  {
                     public void run() {
                         TextView navName = navHeaderBinding.navheadertxtvNombre;
                         TextView navEmail = navHeaderBinding.navheadertxtvCorreo;
+                        ImageView navImage = navHeaderBinding.imageViewProfilePicture;
                         if (usuario != null) {
                             String fullName = usuario.getNombre() + " " + usuario.getApellido();
+                            String pictureSource = usuario.getRutaImagenPerfil();
+                            if (pictureSource != null){
+                                Glide.with(MainMenuNavigationActivity.this).load(new File(pictureSource)).into(navImage);
+                            }
                             navName.setText(fullName);
                             navEmail.setText(usuario.getCorreoElectronico());
                         } else {
