@@ -44,9 +44,13 @@ public class Usuario {
     @ColumnInfo(name = "profile_completed")
     private boolean profileCompleted;
 
+    @Nullable
+    @ColumnInfo(name = "ruta_imagen_perfil")
+    private String rutaImagenPerfil;
+
     public Usuario(@NonNull String nombre, @NonNull String apellido, @NonNull String correoElectronico, @Nullable String contrasena,
                     @Nullable String uidFirebase,
-                   int edad, @NonNull String genero, @NonNull String direccion, boolean profileCompleted) {
+                   int edad, @NonNull String genero, @NonNull String direccion, boolean profileCompleted, @Nullable String rutaImagenPerfil) {
 
         this.nombre = nombre;
         this.apellido = apellido;
@@ -57,6 +61,7 @@ public class Usuario {
         this.direccion = direccion;
         this.uidFirebase = uidFirebase;
         this.profileCompleted = profileCompleted;
+        this.rutaImagenPerfil = rutaImagenPerfil;
     }
 
     //Getters and Setters
@@ -145,5 +150,14 @@ public class Usuario {
 
     public void setProfileCompleted(boolean profileCompleted) {
         this.profileCompleted = profileCompleted;
+    }
+
+    @Nullable
+    public String getRutaImagenPerfil() {
+        return rutaImagenPerfil;
+    }
+
+    public void setRutaImagenPerfil(@Nullable String rutaImagenPerfil) {
+        this.rutaImagenPerfil = rutaImagenPerfil;
     }
 }

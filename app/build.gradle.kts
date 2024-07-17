@@ -3,6 +3,7 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+
 android {
     namespace = "com.example.hablaconmigo"
     compileSdk = 34
@@ -41,6 +42,13 @@ dependencies {
 
     // Also add the dependency for the Google Play services library and specify its version
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+    // Dependencias de Glide para la carga de imágenes
+    implementation ("com.github.bumptech.glide:glide:4.14.2")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
+
+    // Dependencia de la librería de detección de idioma landetect
+    implementation ("com.cybozu.labs:langdetect:1.1-20120112")
 
     implementation(libs.room.runtime)
     implementation(libs.navigation.fragment)
