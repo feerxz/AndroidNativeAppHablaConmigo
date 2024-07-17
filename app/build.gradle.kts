@@ -47,6 +47,9 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.14.2")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
 
+    // Dependencia de la librería de detección de idioma landetect
+    implementation ("com.cybozu.labs:langdetect:1.1-20120112")
+
     implementation(libs.room.runtime)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)

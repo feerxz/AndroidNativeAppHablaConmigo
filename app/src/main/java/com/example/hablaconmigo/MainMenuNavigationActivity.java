@@ -3,7 +3,7 @@ package com.example.hablaconmigo;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -21,7 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.core.view.GravityCompat;
+
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -55,14 +55,14 @@ public class MainMenuNavigationActivity extends AppCompatActivity  {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMainMenuNavigation.toolbar);
-        binding.appBarMainMenuNavigation.fab.setOnClickListener(new View.OnClickListener() {
+        /*binding.appBarMainMenuNavigation.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null)
                         .setAnchorView(R.id.fab).show();
             }
-        });
+        });*/
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         View headerView = navigationView.getHeaderView(0); // Obtener la vista del encabezado del menú
