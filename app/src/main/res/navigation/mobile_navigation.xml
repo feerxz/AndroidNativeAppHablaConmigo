@@ -28,4 +28,14 @@
         android:name="com.example.hablaconmigo.ui.shortcuts.ShortCutFragment"
         android:label="@string/menu_atajos"
         tools:layout="@layout/fragment_short_cut" />
+
+    <fragment
+        android:id="@+id/listShortCutsFragment"
+        android:name="com.example.hablaconmigo.ui.shortcuts.ListShortCutsFragment"
+        android:label="Frases"
+        tools:layout="@layout/fragment_list_short_cuts">
+        <argument
+            android:name="carpetaTitulo"
+            app:argType="string" />
+    </fragment>
 </navigation>

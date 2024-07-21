@@ -77,7 +77,7 @@
     <string name="escuchar">Escuchar</string>
     <string name="enviar">Enviar mensaje</string>
     <string name="escribe_aqui">Escribe aquí</string>
-
+    <string name="menu_list_shortcuts">String</string>
 
 
 </resources>

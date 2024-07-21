@@ -15,17 +15,23 @@ import com.example.hablaconmigo.databinding.FragmentHomeBinding;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    private HomeViewModel homeViewModel;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        // Obtener el ViewModel
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
+        // Inflar el layout y obtener la raíz
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        // Configurar el TextView del ViewModel (si es necesario para otros propósitos)
+
+
+        // Configurar otros elementos si es necesario
+
         return root;
     }
 
