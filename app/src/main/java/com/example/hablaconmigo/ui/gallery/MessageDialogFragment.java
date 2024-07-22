@@ -46,37 +46,6 @@ public class MessageDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    // Obtén una lista de todos los archivos de perfil en la carpeta 'assets/profiles'
-                    String[] profiles = getContext().getAssets().list("profiles");
-
-                    if (profiles != null) {
-                        // Crea una lista para almacenar los perfiles
-                        List<String> jsonProfiles = new ArrayList<>();
-
-                        // Para cada archivo de perfil, lee el contenido del archivo y añádelo a la lista
-                        for (String profile : profiles) {
-                            InputStream is = getContext().getAssets().open("profiles/" + profile);
-                            int size = is.available();
-                            byte[] buffer = new byte[size];
-                            is.read(buffer);
-                            is.close();
-                            String jsonProfile = new String(buffer, "UTF-8");
-                            jsonProfiles.add(jsonProfile);
-                        }
-
-                        // Carga los perfiles en DetectorFactory
-                        DetectorFactory.loadProfile(jsonProfiles);
-                    }
-                } catch (Exception e) {
-                    Log.e("MessageDialogFragment", "Error al cargar los perfiles de idioma", e);
-                }
-            }
-        });
     }
 
     @NonNull
@@ -94,7 +63,7 @@ public class MessageDialogFragment extends DialogFragment {
             @Override
             public void onInit(int status) {
                 if (status != TextToSpeech.ERROR) {
-                    textToSpeech.setLanguage(Locale.US); // Puedes cambiar esto al idioma que prefieras
+                    textToSpeech.setLanguage(Locale.US); // Se establece el idioma en inglés por defecto
                 }
             }
         });
@@ -137,19 +106,20 @@ public class MessageDialogFragment extends DialogFragment {
                             Detector detector = DetectorFactory.create();
                             detector.append(messageContent);
                             String language = detector.detect();
-                            Log.d("El idioma fue: ", language);
 
-                            if (language.equals("en")) {
-                                textToSpeech.setLanguage(Locale.ENGLISH);
-                            } else if (language.equals("es")) {
-                                textToSpeech.setLanguage(new Locale("es", "ES"));
+                            Locale locale = Locale.forLanguageTag(language);
+                            //Log.d("MessageDialogFragment", "Idioma detectado por langdetect: " + language);
+                            //Log.d("MessageDialogFragment", "Idioma detectado: " + locale.getDisplayLanguage());
+                            if (textToSpeech.isLanguageAvailable(locale) != TextToSpeech.LANG_NOT_SUPPORTED) {
+                                textToSpeech.setLanguage(locale);
+                                textToSpeech.speak(messageContent, TextToSpeech.QUEUE_FLUSH, null, "MessageUtteranceId");
                             } else {
                                 Toast.makeText(getContext(), "Idioma no soportado", Toast.LENGTH_SHORT).show();
+                                textToSpeech.setLanguage(new Locale("es", "ES"));
+                                textToSpeech.speak("No se pudo reproducir el mensaje", TextToSpeech.QUEUE_FLUSH, null, "MessageUtteranceId");
                             }
-                            textToSpeech.speak(messageContent, TextToSpeech.QUEUE_FLUSH, null, "MessageUtteranceId");
                         } catch (Exception e) {
-                            Log.e("MessageDialogFragment", "Error al detectar el idioma del mensaje", e);
-                            Toast.makeText(getContext(), "Ocurrió un problema al reproducir el mensaje", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Ocurrió un problema al reproducir el mensaje MESSAGED", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         // Maneja el caso en que el EditText está vacío
@@ -163,7 +133,6 @@ public class MessageDialogFragment extends DialogFragment {
                         dismiss();
                     }
                 }
-                
             }
         });
 
@@ -177,11 +146,11 @@ public class MessageDialogFragment extends DialogFragment {
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         if (textToSpeech != null) {
             textToSpeech.stop();
             textToSpeech.shutdown();
         }
-        super.onDestroy();
     }
 
 }

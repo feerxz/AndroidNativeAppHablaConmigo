@@ -4,16 +4,50 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+import com.example.hablaconmigo.MyApplication;
+import com.example.hablaconmigo.dao.DaoCarpetas;
+import com.example.hablaconmigo.dao.DaoTarjetas;
+import com.example.hablaconmigo.database.AppDataBase;
+import com.example.hablaconmigo.entities.Carpeta;
+import com.example.hablaconmigo.entities.Tarjeta;
 
-    private final MutableLiveData<String> mText;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class SlideshowViewModel extends ViewModel {
+    private final DaoCarpetas daoCarpetas;
+    private final DaoTarjetas daoTarjetas;
+    private final ExecutorService executorService;
 
     public SlideshowViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        AppDataBase appDataBase = MyApplication.dataBase;
+        daoCarpetas = appDataBase.daoCarpetas();
+        daoTarjetas = appDataBase.daoTarjetas();
+        executorService = Executors.newSingleThreadExecutor();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<List<Carpeta>> getCarpetasByUserId(long userId) {
+        return daoCarpetas.findFoldersByUserId(userId);
     }
+
+    public LiveData<List<Tarjeta>> getTarjetasByFolderId(long folderId) {
+        return daoTarjetas.findCardsByFolderId(folderId);
+    }
+
+    public void deleteTarjeta(long tarjetaId) {
+        executorService.execute(() -> daoTarjetas.delete(tarjetaId));
+    }
+
+    public void createTarjeta(Tarjeta tarjeta) {
+        executorService.execute(() -> daoTarjetas.insert(tarjeta));
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        executorService.shutdown();
+    }
+
+
 }

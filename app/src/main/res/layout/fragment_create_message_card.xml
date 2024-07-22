@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutContainerCreateCard"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.slideshow.CreateMessageCardFragment" >
+
+    <TextView
+        android:id="@+id/txtvNombreCarpetaContenedora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/lilita_one"
+        android:gravity="center"
+        android:text="*Nombre de la carpeta*"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@id/txtvTituloNuevaTarjeta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtvTituloNuevaTarjeta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/nombre_nueva_tarjeta"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/textInputLayoutTituloTarjeta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtvNombreCarpetaContenedora" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutTituloTarjeta"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:hint="@string/titulo"
+        app:boxStrokeColor="@color/lightbluebackground"
+        app:hintTextColor="@color/lightbluebackground"
+        app:layout_constraintBottom_toTopOf="@id/txtvFraseAReproducir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtvTituloNuevaTarjeta">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/txtvFraseAReproducir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/que_quieres_reproduzca"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/textinputLayoutFraseTarjeta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutTituloTarjeta" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textinputLayoutFraseTarjeta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/frase"
+        app:boxStrokeColor="@color/lightbluebackground"
+        app:hintTextColor="@color/lightbluebackground"
+        app:layout_constraintBottom_toTopOf="@id/txtvAudioPropio"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayoutTituloTarjeta"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayoutTituloTarjeta"
+        app:layout_constraintTop_toBottomOf="@+id/txtvFraseAReproducir">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/txtvAudioPropio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/usar_propio_audio"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/imgBtnGrabarAudio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textinputLayoutFraseTarjeta" />
+
+    <ImageButton
+        android:id="@+id/imgBtnGrabarAudio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_messagecard"
+        android:contentDescription="@string/grabar_audio"
+        android:elevation="15dp"
+        android:src="@drawable/voice_recorder_off"
+        app:layout_constraintBottom_toTopOf="@id/txtvImagenASubir"
+        app:layout_constraintEnd_toEndOf="@+id/textinputLayoutFraseTarjeta"
+        app:layout_constraintStart_toStartOf="@+id/textinputLayoutFraseTarjeta"
+        app:layout_constraintTop_toBottomOf="@+id/txtvAudioPropio" />
+
+    <TextView
+        android:id="@+id/txtvImagenASubir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/asignar_imagen"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/imageBtnCargarImagenTarjeta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgBtnGrabarAudio" />
+
+    <ImageButton
+        android:id="@+id/imageBtnCargarImagenTarjeta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_messagecard"
+        android:contentDescription="@string/subir_imagen"
+        android:elevation="15dp"
+        android:src="@drawable/upload"
+        app:layout_constraintBottom_toTopOf="@id/btnGuardarNuevaTarjeta"
+        app:layout_constraintEnd_toEndOf="@+id/imgBtnGrabarAudio"
+        app:layout_constraintStart_toStartOf="@+id/imgBtnGrabarAudio"
+        app:layout_constraintTop_toBottomOf="@+id/txtvImagenASubir" />
+
+    <Button
+        android:id="@+id/btnGuardarNuevaTarjeta"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/variantblue"
+        android:text="@string/guardar"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageBtnCargarImagenTarjeta"
+        app:layout_constraintStart_toStartOf="@+id/imageBtnCargarImagenTarjeta"
+        app:layout_constraintTop_toBottomOf="@+id/imageBtnCargarImagenTarjeta" />
+
+    <ImageButton
+        android:id="@+id/imgButtonCloseAddCardFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@null"
+        android:src="@drawable/img_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

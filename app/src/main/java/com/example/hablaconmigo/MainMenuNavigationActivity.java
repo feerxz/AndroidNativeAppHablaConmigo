@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
@@ -126,6 +127,9 @@ public class MainMenuNavigationActivity extends AppCompatActivity  {
         int id = item.getItemId();
         if (id == R.id.action_logout) {
             logout();
+            return true;
+        } else if (id == R.id.action_settings) {
+            Toast.makeText(this, "Configuraciones aún en desarrollo", Toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -28,7 +28,6 @@ public class Tarjeta {
     @Nullable
     @ColumnInfo(name = "ruta_audio")
     private String rutaAudio;
-
     @ColumnInfo(name = "usuario_id")
     private long usuarioId;
 
