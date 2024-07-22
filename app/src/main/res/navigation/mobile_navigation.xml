@@ -28,4 +28,16 @@
         android:name="com.example.hablaconmigo.ui.shortcuts.ShortCutFragment"
         android:label="@string/menu_atajos"
         tools:layout="@layout/fragment_short_cut" />
+
+    <fragment
+        android:id="@+id/chatSettingsFragment"
+        android:name="com.example.hablaconmigo.ui.gallery.ChatSettingsFragment"
+        android:label="@string/chat_settings"
+        tools:layout="@layout/fragment_chat_settings" />
+
+    <fragment
+        android:id="@+id/createMessageCardFragment"
+        android:name="com.example.hablaconmigo.ui.slideshow.CreateMessageCardFragment"
+        android:label="@string/crear_tarjeta"
+        tools:layout="@layout/fragment_create_message_card" />
 </navigation>

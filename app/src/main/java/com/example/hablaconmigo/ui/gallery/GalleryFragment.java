@@ -22,6 +22,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,6 +42,7 @@ public class GalleryFragment extends Fragment {
     private Button writeButton;
     private Button listenButton;
     private ImageView clearButton;
+    private ImageView chatSettings;
     private AutoCompleteTextView autoCompleteTextViewLanguage;
     private MessageAdapter messageAdapter;
     private static final int REQUEST_CODE_SPEECH_INPUT = 1000;
@@ -60,6 +63,7 @@ public class GalleryFragment extends Fragment {
         writeButton = binding.btnEscribir;
         listenButton = binding.btnEscuchar;
         clearButton = binding.imageViewTrash;
+        chatSettings = binding.imageViewChatSettings;
         autoCompleteTextViewLanguage = binding.autoCompleteTextViewLanguage;
 
         writeButton.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +91,7 @@ public class GalleryFragment extends Fragment {
                         e.printStackTrace();
                     }
                 } else {
-                    // Si no se concede el permiso, solicítalo al usuario
+                    // Si no se concede el permiso, se lo solicita al usuario
                     requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_PERMISSION_RECORD_AUDIO);
                 }
             }
@@ -100,18 +104,13 @@ public class GalleryFragment extends Fragment {
             }
         });
 
-        /*autoCompleteTextViewLanguage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        chatSettings.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedLanguage = parent.getItemAtPosition(position).toString();
-                for (int i = 0; i < messageAdapter.getItemCount(); i++) {
-                    Message message = messageAdapter.getMessages().get(i);
-                    String translation = translateText(message.getContenido(), selectedLanguage);
-                    messageAdapter.updateTranslation(i, translation);
-                }
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.chatSettingsFragment);
             }
-        });*/
-
+        });
 
         return binding.getRoot();
     }
@@ -130,13 +129,20 @@ public class GalleryFragment extends Fragment {
         // Crea el adaptador y lo asigna al AutoCompleteTextView
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.dropdown_language_item, languages);
         autoCompleteTextViewLanguage.setAdapter(adapter);
+
+        autoCompleteTextViewLanguage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getContext(), "Las funciones de traducción aún están en desarrollo", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_PERMISSION_RECORD_AUDIO) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // El permiso fue concedido, puedes iniciar el reconocimiento de voz aquí si quieres
+                // El permiso fue concedido
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
@@ -188,10 +194,5 @@ public class GalleryFragment extends Fragment {
         messageAdapter.clearMessages();
     }
 
-    /*public String translateText(String sourceText, String targetLanguage) {
-        // Aquí iría el código para usar la API de Google Translate para traducir sourceText a targetLanguage
-        // Este es solo un ejemplo y necesitarás implementar la lógica real de la traducción
-        return "Traducción de '" + sourceText + "' al " + targetLanguage;
-    }*/
 
 }

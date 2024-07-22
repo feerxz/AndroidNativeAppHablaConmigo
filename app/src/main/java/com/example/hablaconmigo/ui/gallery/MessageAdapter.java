@@ -70,8 +70,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                     String language = detector.detect();
 
                     Locale locale = Locale.forLanguageTag(language);
-                    Log.d("MessageAdapter", "Idioma detectado por langdetect: " + language);
-                    Log.d("MessageAdapter", "Idioma detectado: " + locale.getDisplayLanguage());
                     if (textToSpeech.isLanguageAvailable(locale) != TextToSpeech.LANG_NOT_SUPPORTED) {
                         textToSpeech.setLanguage(locale);
                         textToSpeech.speak(message.getContenido(), TextToSpeech.QUEUE_FLUSH, null, null);
@@ -81,7 +79,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
                         textToSpeech.speak("No se pudo reproducir el mensaje", TextToSpeech.QUEUE_FLUSH, null, null);
                     }
                 } catch (Exception e) {
-                    Toast.makeText(context, "Ocurrió un problema al reproducir el mensaje ADAPTER", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Ocurrió un problema al reproducir el mensaje", Toast.LENGTH_SHORT).show();
                     Log.e("MessageAdapter", "Error al detectar el idioma", e);
                 }
 
@@ -145,18 +143,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         }
     }
 
+
     @SuppressLint("NotifyDataSetChanged")
     public void clearMessages() {
         this.messages.clear();
         notifyDataSetChanged();
     }
 
-    /*public void updateTranslation(int position, String translation) {
-        this.messages.get(position).setTranslation(translation);
-        notifyItemChanged(position);
-    }
-
-    public List<Message> getMessages() {
-        return this.messages;
-    }*/
 }

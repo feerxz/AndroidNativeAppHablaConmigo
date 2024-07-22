@@ -1,8 +1,4 @@
 package com.example.hablaconmigo;
-
-
-
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,10 +17,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.hablaconmigo.database.AppDataBase;
+import com.example.hablaconmigo.entities.Carpeta;
+import com.example.hablaconmigo.entities.Tarjeta;
 import com.example.hablaconmigo.entities.Usuario;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -36,6 +31,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
     private ExecutorService executorService;
     private long userId;
     FirebaseAuth mAuth;
+    AppDataBase appDataBase = MyApplication.dataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +74,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
             Utils.showSnackBarAlert(view, "Por favor, completa todos los campos");
         } else {
             age = Integer.parseInt(ageString);
-            AppDataBase appDataBase = MyApplication.dataBase;
+
             executorService = Executors.newSingleThreadExecutor();
 
             executorService.execute(new Runnable() {
@@ -93,6 +89,7 @@ public class CompleteProfileActivity extends AppCompatActivity {
                         usuario.setDireccion(address);
                         usuario.setProfileCompleted(true);
                         appDataBase.daoUsuarios().update(usuario);
+                        createDefaultFoldersAndMessagesCards(userId);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -121,6 +118,34 @@ public class CompleteProfileActivity extends AppCompatActivity {
         if (executorService != null) {
             executorService.shutdown();
         }
+    }
+
+    private void createDefaultFoldersAndMessagesCards(long usuarioId) {
+        //Se creas las carpetas predeterminadas
+        String nombreImagenCarpetaEmociones = "default_pic_emociones";
+        long carpetaEmocionesId = appDataBase.daoCarpetas().insert(new Carpeta("Emociones","nombreImagenCarpetaEmociones" , usuarioId));
+        String nombreImagenCarpetaPartesDelCuerpo = "default_pic_partesdelcuerpo";
+        long carpetaPartesDelCuerpoId = appDataBase.daoCarpetas().insert(new Carpeta("Partes del cuerpo","nombreImagenCarpetaPartesDelCuerpo" , usuarioId));
+
+        //Se insertan las tarjetas correspondientes en cada carpeta
+        String nombreImagenTarjetaFeliz = "default_pic_feliz";
+        String nombreImagenTarjetaTriste = "default_pic_triste";
+        String nombreImagenTarjetaEnfermo = "default_pic_enfermo";
+        String nombreImagenTarjetaEnojado = "default_pic_enojado";
+        appDataBase.daoTarjetas().insert(new Tarjeta("Feliz", "Feliz", nombreImagenTarjetaFeliz, null, usuarioId, carpetaEmocionesId));
+        appDataBase.daoTarjetas().insert(new Tarjeta("Triste", "Triste", nombreImagenTarjetaTriste, null, usuarioId, carpetaEmocionesId));
+        appDataBase.daoTarjetas().insert(new Tarjeta("Enfermo", "Enfermo", nombreImagenTarjetaEnfermo, null, usuarioId, carpetaEmocionesId));
+        appDataBase.daoTarjetas().insert(new Tarjeta("Enojado", "Enojado", nombreImagenTarjetaEnojado, null, usuarioId, carpetaEmocionesId));
+
+        String nombreImagenTarjetaCabeza = "default_pic_cabeza";
+        String nombreImagenTarjetaEspalda = "default_pic_espalda";
+        String nombreImagenTarjetaMano = "default_pic_mano";
+        String nombreImagenTarjetaPies = "default_pic_pies";
+        appDataBase.daoTarjetas().insert(new Tarjeta("Cabeza", "Cabeza", nombreImagenTarjetaCabeza, null, usuarioId, carpetaPartesDelCuerpoId));
+        appDataBase.daoTarjetas().insert(new Tarjeta("Espalda", "Espalda", nombreImagenTarjetaEspalda, null, usuarioId, carpetaPartesDelCuerpoId));
+        appDataBase.daoTarjetas().insert(new Tarjeta("Mano", "Mano", nombreImagenTarjetaMano, null, usuarioId, carpetaPartesDelCuerpoId));
+        appDataBase.daoTarjetas().insert(new Tarjeta("Pies", "Pies", nombreImagenTarjetaPies, null, usuarioId, carpetaPartesDelCuerpoId));
+
     }
 
 }

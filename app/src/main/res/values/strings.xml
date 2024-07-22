@@ -59,6 +59,9 @@
     <string name="idioma">Idioma</string>
     <string name="remitente_tu">Tú</string>
     <string name="remitente_otro">Otro</string>
+    <string name="config_chat">Configuraciones del Chat</string>
+    <string name="vel_reproduccion">Velocidad de reproducción</string>
+    <string name="rep_traduccion">Reproducir la traducción del mensaje</string>
 
     <string name="title_activity_main_menu_navigation">MainMenuNavigation</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -77,6 +80,20 @@
     <string name="escuchar">Escuchar</string>
     <string name="enviar">Enviar mensaje</string>
     <string name="escribe_aqui">Escribe aquí</string>
+    <string name="chat_settings">Configuraciones de chat</string>
+
+    <string name="btn_edit_folder">Boton de editar carpetas</string>
+    <string name="btn_edit_card">Boton de crear nueva tarjeta</string>
+    <string name="nombre_nueva_tarjeta">Nombre de la nueva tarjeta</string>
+    <string name="que_quieres_reproduzca">¿Qué quieres que reproduzca?</string>
+    <string name="usar_propio_audio">¿Quieres usar tu propio audio?\n(opcional)</string>
+    <string name="asignar_imagen">Asígnale una imagen\n(opcional)</string>
+    <string name="guardar">Guardar</string>
+    <string name="grabar_audio">Grabar audio</string>
+    <string name="subir_imagen">Subir Imagen</string>
+    <string name="titulo">Título*</string>
+    <string name="frase">Frase*</string>
+    <string name="crear_tarjeta">Crear Nueva Tarjeta</string>
 
 
 

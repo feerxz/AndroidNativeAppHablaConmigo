@@ -3,6 +3,8 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.room.Room;
+import androidx.room.migration.Migration;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.cybozu.labs.langdetect.DetectorFactory;
 import com.example.hablaconmigo.database.AppDataBase;
@@ -19,8 +21,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        dataBase = Room.databaseBuilder(this, AppDataBase.class,"dbHC")
-                .build();
+        dataBase = Room.databaseBuilder(this, AppDataBase.class,"dbHC").build();
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(new Runnable() {
             @Override
@@ -53,5 +54,14 @@ public class MyApplication extends Application {
             }
         });
     }
+
+    /*static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE tarjetas_new (id INTEGER PRIMARY KEY NOT NULL, nombre_tarjeta TEXT NOT NULL, frase_tarjeta TEXT NOT NULL, imagen TEXT, usuario_id INTEGER NOT NULL, carpeta_id INTEGER NOT NULL)");
+            database.execSQL("DROP TABLE tarjetas");
+            database.execSQL("ALTER TABLE tarjetas_new RENAME TO tarjetas");
+        }
+    };*/
 
 }

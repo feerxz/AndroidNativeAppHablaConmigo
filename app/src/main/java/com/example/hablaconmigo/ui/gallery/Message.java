@@ -3,7 +3,7 @@ package com.example.hablaconmigo.ui.gallery;
 public class Message {
     private String contenido;
     private boolean isSent;
-    private String translation;
+    //private String translation;
 
     public Message(String contenido, boolean isSent) {
         this.contenido = contenido;
@@ -18,11 +18,11 @@ public class Message {
         return isSent;
     }
 
-    public String getTranslation() {
+    /*public String getTranslation() {
         return translation;
     }
 
     public void setTranslation(String translation) {
         this.translation = translation;
-    }
+    }*/
 }
