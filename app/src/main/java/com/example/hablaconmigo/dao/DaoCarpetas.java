@@ -2,6 +2,7 @@ package com.example.hablaconmigo.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -9,8 +10,13 @@ import com.example.hablaconmigo.entities.Carpeta;
 
 import java.util.List;
 
+
+import com.example.hablaconmigo.entities.Carpeta;
+
+import java.util.List;
 @Dao
 public interface DaoCarpetas {
+
     //ICREAR UNA NUEVA CARPETA
     @Insert
     long insert(Carpeta carpeta);
@@ -30,7 +36,6 @@ public interface DaoCarpetas {
     //ELIMINAR UNA CARPETA
     @Query("DELETE FROM carpetas WHERE id = :id")
     void delete(long id);
-
 
 
 

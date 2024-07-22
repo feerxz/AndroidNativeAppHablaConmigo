@@ -30,6 +30,16 @@
         tools:layout="@layout/fragment_short_cut" />
 
     <fragment
+        android:id="@+id/listShortCutsFragment"
+        android:name="com.example.hablaconmigo.ui.shortcuts.ListShortCutsFragment"
+        android:label="Frases"
+        tools:layout="@layout/fragment_list_short_cuts">
+        <argument
+            android:name="carpetaTitulo"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
         android:id="@+id/chatSettingsFragment"
         android:name="com.example.hablaconmigo.ui.gallery.ChatSettingsFragment"
         android:label="@string/chat_settings"
@@ -40,4 +50,5 @@
         android:name="com.example.hablaconmigo.ui.slideshow.CreateMessageCardFragment"
         android:label="@string/crear_tarjeta"
         tools:layout="@layout/fragment_create_message_card" />
+
 </navigation>

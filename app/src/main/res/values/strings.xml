@@ -80,6 +80,9 @@
     <string name="escuchar">Escuchar</string>
     <string name="enviar">Enviar mensaje</string>
     <string name="escribe_aqui">Escribe aquí</string>
+
+    <string name="menu_list_shortcuts">String</string>
+
     <string name="chat_settings">Configuraciones de chat</string>
 
     <string name="btn_edit_folder">Boton de editar carpetas</string>
@@ -94,6 +97,7 @@
     <string name="titulo">Título*</string>
     <string name="frase">Frase*</string>
     <string name="crear_tarjeta">Crear Nueva Tarjeta</string>
+
 
 
 
