@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hablaconmigo.R;
-import com.example.hablaconmigo.ui.shortcuts.FrasesAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -27,6 +26,8 @@ public class ListShortCutsFragment extends Fragment {
     private ImageView editIconList;
     private FloatingActionButton fabAddList;
     private RecyclerView recyclerShortcuts;
+    private FrasesAdapter adapter;
+    private boolean isEditMode = false;
 
     @Nullable
     @Override
@@ -40,7 +41,6 @@ public class ListShortCutsFragment extends Fragment {
 
         // Configurar RecyclerView
         recyclerShortcuts.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerShortcuts.setAdapter(new FrasesAdapter(new ArrayList<>())); // Ajusta tu adaptador aquí
 
         // Crear y configurar el adaptador
         List<String> frases = new ArrayList<>();
@@ -53,7 +53,7 @@ public class ListShortCutsFragment extends Fragment {
         frases.add("Frase de prueba 7");
         frases.add("Frase de prueba 8");
         frases.add("Frase de prueba 9");
-        FrasesAdapter adapter = new FrasesAdapter(frases);
+        adapter = new FrasesAdapter(frases);
         recyclerShortcuts.setAdapter(adapter);
 
         // Obtener el título de la carpeta desde los argumentos
@@ -61,15 +61,15 @@ public class ListShortCutsFragment extends Fragment {
             String carpetaTitulo = getArguments().getString("carpetaTitulo");
             titleList.setText(carpetaTitulo);
             requireActivity().setTitle(carpetaTitulo);
-        }else {
+        } else {
             titleList.setText("Frases");
             requireActivity().setTitle("Frases");
         }
 
-
         editIconList.setOnClickListener(v -> {
-            // Lógica para editar
-            Toast.makeText(getContext(), "En desarrollo", Toast.LENGTH_SHORT).show();
+            // Alternar modo de edición
+            isEditMode = !isEditMode;
+            adapter.setEditMode(isEditMode);
         });
 
         fabAddList.setOnClickListener(v -> {
